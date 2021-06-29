@@ -56,6 +56,13 @@ func realMain() int {
 			},
 		},
 		Copyright: "© 2019 Tomohiro Taira",
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:    "open_browser",
+				Aliases: []string{"o"},
+				Usage:   "Open Browser after upload.",
+			},
+		},
 	}
 	err := app.Run(os.Args)
 	if err != nil {
@@ -145,9 +152,11 @@ func upload(c *cli.Context) error {
 	}
 
 	fmt.Println(url)
-	err = open.Run(url)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to open by default browser: %s\n", err)
+	if c.Bool("open_browser") {
+		err = open.Run(url)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to open by default browser: %s\n", err)
+		}
 	}
 	return err
 }
