@@ -23,6 +23,13 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+var (
+	Version = "devel"
+	commit  = "none"
+	date    = "unknown"
+	buildBy = "unknown"
+)
+
 const (
 	// ExitCodeOK represents succeed exit status.
 	ExitCodeOK int = 0
@@ -49,7 +56,7 @@ func realMain() int {
 		Usage:     "Gyazo command-line uploader",
 		UsageText: "gyazo-cli [global options] [PATH]",
 		Action:    upload,
-		Version:   fmt.Sprintf("%s (rev %s) [%s %s %s]", Version, revision, runtime.GOOS, runtime.GOARCH, runtime.Version()),
+		Version:   fmt.Sprintf("%s (rev %s) [%s %s %s]", Version, commit, runtime.GOOS, runtime.GOARCH, runtime.Version()),
 		Authors: []*cli.Author{
 			&cli.Author{
 				Name:  "Tomohiro Taira",
