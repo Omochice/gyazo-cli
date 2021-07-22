@@ -151,12 +151,13 @@ func upload(c *cli.Context) error {
 		}
 	}
 
-	fmt.Println(url)
 	if c.Bool("open_browser") {
 		err = open.Run(url)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Failed to open by default browser: %s\n", err)
 		}
+	} else {
+		fmt.Println(url)
 	}
 	return err
 }
