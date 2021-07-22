@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/mitchellh/go-homedir"
@@ -61,6 +62,10 @@ func realMain() int {
 				Name:    "open_browser",
 				Aliases: []string{"o"},
 				Usage:   "Open Browser after upload.",
+			},
+			&cli.BoolFlag{
+				Name:  "show_direct_url",
+				Usage: "Show direct image url.",
 			},
 		},
 	}
@@ -156,6 +161,10 @@ func upload(c *cli.Context) error {
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Failed to open by default browser: %s\n", err)
 		}
+	} else if c.Bool("show_direct_url") {
+		slice := strings.Split(filename, ".")
+		ext := slice[len(slice)-1]
+		fmt.Println(strings.Replace(url, "gyazo.com", "i.gyazo.com", 1) + "." + ext)
 	} else {
 		fmt.Println(url)
 	}
